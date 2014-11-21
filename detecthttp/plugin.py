@@ -121,6 +121,7 @@ class DetectHTTP(Plugin):
         xunit_plugin = [p for p in self.conf.plugins.plugins if isinstance(p, XunitPlugin)]
         if xunit_plugin:
             xunit_plugin = xunit_plugin[0]
+            xunit_plugin.stats['failures'] += 1
             xunit_plugin.errorlist.append(
                 '<testcase classname=%(cls)s name=%(name)s time="%(taken).3f">'
                 '<failure type=%(errtype)s message=%(message)s><![CDATA[%(tb)s]]>'
