@@ -39,7 +39,7 @@ setup(
     packages=['detecthttp'],
     entry_points={
         'nose.plugins.0.10': [
-            'detect_http = detecthttp:DetectHTTP',
+            'detecthttp = detecthttp:DetectHTTP',
         ]
     },
     include_package_data=True,

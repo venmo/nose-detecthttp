@@ -8,14 +8,12 @@ from nose.plugins import Plugin
 from nose.plugins.xunit import Xunit as XunitPlugin
 import vcr
 
-DISABLE_OPTION = '--no-detect-http'
-
 
 class VcrFailuresTest(object):
     # This is just a callable with custom __str__, since
     # apparently overriding __str__ on lambdas doesn't do anything.
     def __str__(self):
-        return "Tests made external http calls (%s to disable)" % DISABLE_OPTION
+        return "Tests made external http calls"
 
     def __call__(self):
         pass
@@ -57,33 +55,23 @@ class UnmockedReport(Exception):
 
 
 class DetectHTTP(Plugin):
-    name = 'detect_http'
+    """
+    Detect tests that make http requests.
+    Details of detected requests are exposed as a failure also available to xunit.
+    """
+
+    name = 'detecthttp'
     score = 3000  # must be higher than 2000 to send results to xunit
 
-    def __init__(self):
-        Plugin.__init__(self)
-
-    def options(self, parser, env):
-        parser.add_option(DISABLE_OPTION,
-                          action="store_false",
-                          dest="detect_http",
-                          default=True,
-                          help=("Don't detect tests that make external calls."),
-                          )
-
     def configure(self, options, conf):
-        self.conf = conf
+        super(DetectHTTP, self).configure(options, conf)
 
         self.added_failure = False
         self.unmocked_report = UnmockedReport()
 
-        if options.detect_http:
-            self.enabled = True
-        else:
-            self.enabled = False
-
     def prepareTestResult(self, result):
-        # We need access to the result in afterTest, but it's not usually available.
+        # We need access to the result in stopTest, but it's not usually available.
+
         self.result = result
 
     def startTest(self, test):
