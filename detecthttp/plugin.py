@@ -63,15 +63,25 @@ class DetectHTTP(Plugin):
     name = 'detecthttp'
     score = 3000  # must be higher than 2000 to send results to xunit
 
+    def options(self, parser, env):
+        super(DetectHTTP, self).options(parser, env)
+
+        parser.add_option(
+            '--no-detecthttp', action='store_true',
+            default=False, dest="nodetecthttp",
+            help="Disable detecthttp. Has the most precedence.")
+
     def configure(self, options, conf):
         super(DetectHTTP, self).configure(options, conf)
+
+        if options.nodetecthttp:
+            self.enabled = False
 
         self.added_failure = False
         self.unmocked_report = UnmockedReport()
 
     def prepareTestResult(self, result):
         # We need access to the result in stopTest, but it's not usually available.
-
         self.result = result
 
     def startTest(self, test):
