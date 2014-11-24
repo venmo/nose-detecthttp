@@ -9,7 +9,7 @@ Example output::
     test_with_no_request ... ok
 
     ======================================================================
-    FAIL: Tests made external http calls (--no-detect-http to disable)
+    FAIL: Tests made external http calls
     ----------------------------------------------------------------------
     - myapp.tests.AppTest:
 
