@@ -4,7 +4,7 @@ nose-detecthttp
 A nose plugin that can detect tests making external http calls.
 Example output::
     
-    $ nosetests -v myapp/
+    $ nosetests -v --with-detecthttp myapp/
     test_that_makes_request ... ok
     test_with_no_request ... ok
 
