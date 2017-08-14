@@ -71,11 +71,18 @@ class DetectHTTP(Plugin):
             default=False, dest="nodetecthttp",
             help="Disable detecthttp. Has the most precedence.")
 
+        parser.add_option(
+            '--vcr-ignore-host', action='append',
+            default=[], dest='ignored_hosts',
+            help="Ignore external calls to certain hosts")
+
     def configure(self, options, conf):
         super(DetectHTTP, self).configure(options, conf)
 
         if options.nodetecthttp:
             self.enabled = False
+
+        self.ignored_hosts = filter(bool, options.ignored_hosts) or []
 
         self.added_failure = False
         self.unmocked_report = UnmockedReport()
@@ -91,7 +98,8 @@ class DetectHTTP(Plugin):
         self._cassette_manager = vcr.use_cassette(cassette_name,
                                                   serializer='yaml',
                                                   record_mode='once',
-                                                  ignore_localhost=True)
+                                                  ignore_localhost=True,
+                                                  ignore_hosts=self.ignored_hosts)
 
         self._cassette = self._cassette_manager.__enter__()
         assert not self._cassette.rewound  # this cassette shouldn't be from disk
