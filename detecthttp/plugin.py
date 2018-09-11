@@ -72,9 +72,9 @@ class DetectHTTP(Plugin):
             help="Disable detecthttp. Has the most precedence.")
 
         parser.add_option(
-            '--vcr-ignore-host', action='append',
-            default=[], dest='ignored_hosts',
-            help="Ignore external calls to certain hosts")
+            '--vcr-ignore-host', action='store',
+            default='', dest='ignored_hosts',
+            help="Ignore external calls to certain hosts. Accepts a comma-separated list.")
 
     def configure(self, options, conf):
         super(DetectHTTP, self).configure(options, conf)
@@ -82,7 +82,7 @@ class DetectHTTP(Plugin):
         if options.nodetecthttp:
             self.enabled = False
 
-        self.ignored_hosts = filter(bool, options.ignored_hosts) or []
+        self.ignored_hosts = filter(bool, options.ignored_hosts.split(','))
 
         self.added_failure = False
         self.unmocked_report = UnmockedReport()
