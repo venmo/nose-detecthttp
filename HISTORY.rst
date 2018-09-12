@@ -1,6 +1,12 @@
 History
 -------
 
+1.0.0
++++++
+released 2018-09-12
+
+- breaking: ignore host flag now accepts comma-separated values rather than being provided multiple times
+
 0.2.0
 +++++
 released 2017-08-15

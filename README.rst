@@ -26,7 +26,7 @@ be running tests in a containerized environment where dynamodb has the hostname
 `dynamodb` and `mysql` has the hostname `mysql`. To ignore these hosts,
 the `--vcr-ignore-host` option::
 
-    nosetests -v --with-detecthttp --vcr-ignore-host=www.example.com app/
+    nosetests -v --with-detecthttp --vcr-ignore-host=www.example.com,dynamodb,mysql app/
     test_one (app.tests.ExternalTestCase) ... ok
     test_two (app.tests.ExternalTestCase) ... ok
 
