@@ -1,6 +1,12 @@
 History
 -------
 
+1.1.0
++++++
+released 2018-12-18
+
+- add pytest support
+
 1.0.0
 +++++
 released 2018-09-12
