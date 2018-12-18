@@ -40,8 +40,12 @@ setup(
     entry_points={
         'nose.plugins.0.10': [
             'detecthttp = detecthttp:DetectHTTP',
-        ]
+        ],
+        'pytest11': [
+            'detecthttp = detecthttp.pytest',
+        ],
     },
+
     include_package_data=True,
     install_requires=requires,
     license='MIT',
