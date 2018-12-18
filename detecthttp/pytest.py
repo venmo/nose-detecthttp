@@ -75,7 +75,8 @@ def pytest_runtest_call(item):
 
 
 def pytest_runtest_teardown(item):
-    """Note any unmocked interactions."""
+    # Note unmocked interactions collected during runtest_call.
+    # This is raised here so that pytest doesn't mark it as an internal error.
 
     report = item.config._detecthttp_reports.pop(item.nodeid, None)
     if item.config._detecthttp_enabled and report:
