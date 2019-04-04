@@ -1,6 +1,8 @@
 nose-detecthttp
 ===============
 
+*[not actively supported outside of internal Venmo usage]*
+
 A nose and pytest plugin that can detect tests making external http calls.
 With nose, it adds a single artificial failure with all the results::
     
