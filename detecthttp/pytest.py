@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+from builtins import filter
 import sys
 
 import pytest
@@ -43,7 +44,7 @@ def pytest_configure(config):
     if config.getoption('detecthttp') and not config.getoption('nodetecthttp'):
         config._detecthttp_enabled = True
 
-    config._detecthttp_ignored_hosts = filter(bool, config.getoption('ignored_hosts').split(','))
+    config._detecthttp_ignored_hosts = list(filter(bool, config.getoption('ignored_hosts').split(',')))
     config._detecthttp_reports = {}  # nodeid -> UnmockedReport
 
 
