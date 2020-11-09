@@ -1,3 +1,6 @@
+from builtins import filter
+from builtins import str
+from builtins import object
 from collections import defaultdict
 from functools import partial
 from operator import itemgetter
@@ -40,11 +43,11 @@ class UnmockedReport(Exception):
 
     def __str__(self):
         output = []
-        for module_and_class, failures in sorted(self.unmocked_tests.iteritems(),
+        for module_and_class, failures in sorted(iter(self.unmocked_tests.items()),
                                                  key=itemgetter(0)):
             output.append("- %s:" % module_and_class)
             output.append('')
-            for test_name, cassette in failures.items():
+            for test_name, cassette in list(failures.items()):
                 output.append("    %s:" % test_name)
                 for request in cassette.requests:
                     output.append("      %s %s" % (request.method, request.url.split('?')[0]))
@@ -82,7 +85,7 @@ class DetectHTTP(Plugin):
         if options.nodetecthttp:
             self.enabled = False
 
-        self.ignored_hosts = filter(bool, options.ignored_hosts.split(','))
+        self.ignored_hosts = list(filter(bool, options.ignored_hosts.split(',')))
 
         self.added_failure = False
         self.unmocked_report = UnmockedReport()
