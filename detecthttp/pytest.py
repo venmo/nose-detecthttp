@@ -70,7 +70,13 @@ def pytest_runtest_call(item):
 
     if enabled:
         cassette_manager.__exit__(*sys.exc_info())
-        if len(cassette):
+        requested_hosts = []
+        for request in cassette.data:
+            domain = request[0].host.replace('www.', '')  # remove www if exists
+            host = domain.split('.')[0]  # get host only no .com/.biz/.org
+            requested_hosts.append(host)
+        non_ignored_or_mocked_hosts = [host for host in requested_hosts if host not in item.config._detecthttp_ignored_hosts]
+        if non_ignored_or_mocked_hosts:
             error_report = UnmockedRequestsDetected(cassette)
             item.config._detecthttp_reports[item.nodeid] = error_report
 
