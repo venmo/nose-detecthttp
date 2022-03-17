@@ -1,16 +1,10 @@
 import re
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
-requires = [
-    'vcrpy>=1.1.0',
-]
+from setuptools import setup
 
 with open('README.rst') as f:
     readme = f.read()
+
 with open('HISTORY.rst') as f:
     history = f.read()
 
@@ -20,7 +14,9 @@ with open('HISTORY.rst') as f:
 
 VERSIONFILE = 'detecthttp/_version.py'
 
-version_line = open(VERSIONFILE).read()
+with open(VERSIONFILE) as f:
+    version_line = f.read()
+
 version_re = r"^__version__ = ['\"]([^'\"]*)['\"]"
 match = re.search(version_re, version_line, re.M)
 if match:
@@ -45,16 +41,23 @@ setup(
             'detecthttp = detecthttp.pytest',
         ],
     },
-
     include_package_data=True,
-    install_requires=requires,
+    install_requires=[
+        'vcrpy>=1.1.0',
+    ],
     license='MIT',
     zip_safe=False,
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
 )
