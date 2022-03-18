@@ -1,6 +1,11 @@
 History
 -------
 
+1.2.1
++++++
+
+- Add Python 3 support
+
 1.1.0
 +++++
 released 2018-12-18
